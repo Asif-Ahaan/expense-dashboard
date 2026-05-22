@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ExpenseIQ — Corporate Expense Intelligence Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">⬡</span>
+        <span class="brand-name">ExpenseIQ</span>
+        <span class="brand-tag">Corporate Expense Intelligence</span>
+      </div>
+      <div class="header-meta">
+        <span class="period-badge">FY 2024 – 2026</span>
+        <span class="data-badge">14,618 Transactions</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV TABS -->
+  <nav class="tab-nav">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="causes">Root Causes</button>
+    <button class="tab" data-tab="outcomes">Outcomes & Risk</button>
+    <button class="tab" data-tab="solutions">Solutions</button>
+  </nav>
+
+  <main>
+
+    <!-- ============================== OVERVIEW ============================== -->
+    <section id="overview" class="tab-content active">
+      <!-- KPI Strip -->
+      <div class="kpi-strip">
+        <div class="kpi accent-red">
+          <div class="kpi-label">Total Spend (INR)</div>
+          <div class="kpi-value">₹3.91T</div>
+          <div class="kpi-sub">Across 14,618 transactions</div>
+        </div>
+        <div class="kpi accent-orange">
+          <div class="kpi-label">Personal Expenses Submitted</div>
+          <div class="kpi-value">₹28.9B</div>
+          <div class="kpi-sub">1,380 flagged transactions (9.4%)</div>
+        </div>
+        <div class="kpi accent-yellow">
+          <div class="kpi-label">Missing Receipts</div>
+          <div class="kpi-value">5,722</div>
+          <div class="kpi-sub">39.1% of all transactions</div>
+        </div>
+        <div class="kpi accent-blue">
+          <div class="kpi-label">Approval Rate</div>
+          <div class="kpi-value">0%</div>
+          <div class="kpi-sub">13,238 still pending · 0 approved</div>
+        </div>
+        <div class="kpi accent-purple">
+          <div class="kpi-label">Data Quality Gaps</div>
+          <div class="kpi-value">4,807</div>
+          <div class="kpi-sub">Transactions missing cost center</div>
+        </div>
+      </div>
+
+      <!-- Charts row 1 -->
+      <div class="charts-row">
+        <div class="chart-card wide">
+          <div class="chart-header">
+            <h3>Monthly Spend Trend</h3>
+            <span class="chart-sub">INR · Jan 2024 – Dec 2026</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="monthlyChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Spend by Department</h3>
+            <span class="chart-sub">Top 6 departments</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="deptChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row 2 -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Top 10 Vendors by Spend</h3>
+            <span class="chart-sub">INR equivalent</span>
+          </div>
+          <div class="chart-wrap tall">
+            <canvas id="vendorChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Currency Exposure</h3>
+            <span class="chart-sub">Only 0.8% spend was in INR</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="currencyChart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Compliance Issues</h3>
+            <span class="chart-sub">Count by issue type</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="issuesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CAUSES ============================== -->
+    <section id="causes" class="tab-content">
+      <div class="section-intro">
+        <h2>Root Cause Analysis</h2>
+        <p>Six systemic failures identified across policy, process, and technology dimensions.</p>
+      </div>
+
+      <div class="cause-grid">
+
+        <div class="cause-card">
+          <div class="cause-number">01</div>
+          <div class="cause-icon">🧾</div>
+          <h4>No Receipt Enforcement</h4>
+          <div class="cause-stat">5,722 transactions <span class="stat-pct">= 39.1%</span></div>
+          <p>Nearly 2 in 5 transactions were submitted without a receipt attached. The system accepts expense claims without mandating proof-of-purchase, creating a large unverifiable spend pool.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:39.1%"></div>
+            <span>39.1% of 14,618</span>
+          </div>
+        </div>
+
+        <div class="cause-card">
+          <div class="cause-number">02</div>
+          <div class="cause-icon">🏷️</div>
+          <h4>Missing Cost Center Attribution</h4>
+          <div class="cause-stat">4,807 transactions <span class="stat-pct">= 32.9%</span></div>
+          <p>A third of all transactions have no cost center assigned, making budget tracking by business unit impossible. This indicates either weak form validation or manual entry bypasses.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:32.9%"></div>
+            <span>32.9% of 14,618</span>
+          </div>
+        </div>
+
+        <div class="cause-card">
+          <div class="cause-number">03</div>
+          <div class="cause-icon">🕰️</div>
+          <h4>Broken Approval Workflow</h4>
+          <div class="cause-stat">13,238 pending <span class="stat-pct">= 90.6%</span></div>
+          <p>Not a single transaction has been approved across the entire 3-year dataset. Every non-rejected entry remains in pending state, indicating the approval chain is either broken, ignored, or bypassed entirely.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:90.6%" style="background:var(--red)"></div>
+            <span>90.6% of 14,618</span>
+          </div>
+        </div>
+
+        <div class="cause-card">
+          <div class="cause-number">04</div>
+          <div class="cause-icon">👤</div>
+          <h4>Anonymous Submissions</h4>
+          <div class="cause-stat">1,298 transactions <span class="stat-pct">= 8.9%</span></div>
+          <p>Hundreds of transactions were submitted without identifying who filed them. This removes accountability and prevents audit trails, potentially masking intentional fraud or policy abuse.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:8.9%"></div>
+            <span>8.9% of 14,618</span>
+          </div>
+        </div>
+
+        <div class="cause-card">
+          <div class="cause-number">05</div>
+          <div class="cause-icon">🏠</div>
+          <h4>Personal Expense Misclassification</h4>
+          <div class="cause-stat">₹28.9B personal spend <span class="stat-pct">= 7.4%</span></div>
+          <p>1,380 transactions totalling ₹28.9 billion contain personal expenses (Netflix, Amazon Prime, Swiggy home deliveries, Goa vacation cabs) submitted on corporate cards. Detection relies on keyword matching, not behavioral controls.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:7.4%"></div>
+            <span>7.4% of total spend</span>
+          </div>
+        </div>
+
+        <div class="cause-card">
+          <div class="cause-number">06</div>
+          <div class="cause-icon">📋</div>
+          <h4>Department Name Fragmentation</h4>
+          <div class="cause-stat">23 variants <span class="stat-pct">for ~6 depts</span></div>
+          <p>"Engineering" appears as "Enginnering", "Engg Team", "Engg.", "Dev-Ops", "Enginering". Finance appears as "Finace" and "Fiance". This corrupts spend roll-ups and prevents accurate budget vs. actual comparisons.</p>
+          <div class="cause-bar-wrap">
+            <div class="cause-bar" style="width:28%"></div>
+            <span>~28% affected spend</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- secondary finding -->
+      <div class="finding-strip">
+        <div class="finding">
+          <span class="find-num">495</span>
+          <span class="find-label">Transactions with entry lag &gt;30 days between submission and system entry — delays audit and reconciliation</span>
+        </div>
+        <div class="finding">
+          <span class="find-num">USD 55.4%</span>
+          <span class="find-label">Of all spend was in USD, yet only 0.8% in INR — extreme FX dependency with no hedging data available</span>
+        </div>
+        <div class="finding">
+          <span class="find-num">369 txns</span>
+          <span class="find-label">Logged under vendor "UNKNOWN" — ₹9.9B in unidentified payee spend (largest vendor category)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== OUTCOMES ============================== -->
+    <section id="outcomes" class="tab-content">
+      <div class="section-intro">
+        <h2>Outcomes & Risk Exposure</h2>
+        <p>Quantified financial, operational, and compliance consequences of the issues identified.</p>
+      </div>
+
+      <div class="outcome-grid">
+
+        <div class="outcome-card risk-critical">
+          <div class="risk-label">CRITICAL</div>
+          <h4>Financial Leakage via Personal Expenses</h4>
+          <div class="outcome-amount">₹28.9 Billion</div>
+          <p>Confirmed personal spend submitted as corporate — Netflix, Amazon Prime, vacation travel, personal food deliveries. This is only keyword-detected fraud; undetected cases remain unquantified.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>1,380</span> flagged txns</div>
+            <div class="om"><span>9.4%</span> of all transactions</div>
+            <div class="om"><span>7.4%</span> of total spend</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-critical">
+          <div class="risk-label">CRITICAL</div>
+          <h4>Zero Approvals — Governance Collapse</h4>
+          <div class="outcome-amount">₹3.91 Trillion</div>
+          <p>100% of non-rejected spend (₹3.91T across 13,238 transactions) has never been formally approved. This means the company has effectively been operating without an active expense control framework for 3 years.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>0</span> approved txns</div>
+            <div class="om"><span>13,238</span> perpetually pending</div>
+            <div class="om"><span>3 years</span> of unapproved spend</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-high">
+          <div class="risk-label">HIGH</div>
+          <h4>Unauditable Spend — Missing Receipts</h4>
+          <div class="outcome-amount">5,722 Transactions</div>
+          <p>39.1% of all transactions cannot be independently verified for legitimacy. In any tax audit or regulatory inspection, these become presumptive disallowed deductions or trigger penalty assessments.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>39.1%</span> receipt gap rate</div>
+            <div class="om"><span>~₹152B</span> estimated unverifiable spend</div>
+            <div class="om"><span>Tax risk</span> on disallowance</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-high">
+          <div class="risk-label">HIGH</div>
+          <h4>Budget Tracking Breakdown</h4>
+          <div class="outcome-amount">4,807 Gaps</div>
+          <p>Missing cost centers on 32.9% of transactions means CFO-level budget vs. actual comparisons are structurally inaccurate. Cost overruns in any BU cannot be reliably detected or attributed.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>32.9%</span> unmapped</div>
+            <div class="om"><span>6 depts</span> affected</div>
+            <div class="om"><span>23 name variants</span> corrupting data</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-high">
+          <div class="risk-label">HIGH</div>
+          <h4>FX Exposure Without Hedging Signal</h4>
+          <div class="outcome-amount">₹387B in Foreign Currency</div>
+          <p>99.2% of spend occurred in foreign currencies (USD, GBP, EUR, SGD, AED). A 5% adverse FX move on USD-denominated spend alone represents ~₹10.8B in unbudgeted cost. No hedging data is captured in the system.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>USD 55.4%</span> of total</div>
+            <div class="om"><span>GBP 20.7%</span> exposure</div>
+            <div class="om"><span>0.8%</span> in INR</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-medium">
+          <div class="risk-label">MEDIUM</div>
+          <h4>Anonymous Transactions — Accountability Void</h4>
+          <div class="outcome-amount">1,298 Transactions</div>
+          <p>No submitter recorded on 8.9% of all transactions. These cannot be followed up, queried, or attributed for reimbursement recovery. In fraud scenarios, these provide cover for unauthorized spend.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>1,298</span> anonymous</div>
+            <div class="om"><span>Unrecoverable</span> if fraud</div>
+            <div class="om"><span>Audit liability</span></div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-medium">
+          <div class="risk-label">MEDIUM</div>
+          <h4>₹9.9B with Unknown Vendors</h4>
+          <div class="outcome-amount">369 Transactions</div>
+          <p>"UNKNOWN" is the single largest vendor by spend. This indicates either vendor onboarding failures, manual workarounds, or deliberate obfuscation of payee identity — all high-risk for fraud and compliance.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>₹9.9B</span> at risk</div>
+            <div class="om"><span>#1</span> vendor by spend</div>
+            <div class="om"><span>369</span> unidentified payees</div>
+          </div>
+        </div>
+
+        <div class="outcome-card risk-medium">
+          <div class="risk-label">MEDIUM</div>
+          <h4>Vendor-Description Mismatch</h4>
+          <div class="outcome-amount">612+ Transactions</div>
+          <p>Descriptions reference vendors that differ from the recorded vendor canonical (e.g., Uber transaction described as "personal grocery run", Swiggy as a SaaS subscription). Indicates possible card misuse or data entry errors.</p>
+          <div class="outcome-metric-row">
+            <div class="om"><span>612+</span> mismatches</div>
+            <div class="om"><span>4.2%</span> of transactions</div>
+            <div class="om"><span>Manual review</span> required</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================== SOLUTIONS ============================== -->
+    <section id="solutions" class="tab-content">
+      <div class="section-intro">
+        <h2>Recommended Solutions</h2>
+        <p>Prioritized action plan across immediate controls, process re-engineering, and technology improvements.</p>
+      </div>
+
+      <div class="priority-legend">
+        <span class="pl p1">P1 Immediate</span>
+        <span class="pl p2">P2 Short-term (30–90 days)</span>
+        <span class="pl p3">P3 Medium-term (90–180 days)</span>
+      </div>
+
+      <div class="solution-list">
+
+        <div class="solution-card p1-card">
+          <div class="sol-priority p1">P1</div>
+          <div class="sol-body">
+            <h4>Restore Approval Workflow Immediately</h4>
+            <div class="sol-impact">Impact: ₹3.91T currently unapproved</div>
+            <p>Audit why 0 transactions have been approved in 3 years. Re-activate approval routing, assign approvers per cost center, and set SLA of 5 business days. Implement automated escalation if approver is unresponsive beyond 3 days.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> 100% approval rate within 30 days of submission</div>
+              <div class="sm"><span>KPI:</span> Avg. approval time ≤5 business days</div>
+              <div class="sm"><span>Owner:</span> CFO + Finance Ops</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p1-card">
+          <div class="sol-priority p1">P1</div>
+          <div class="sol-body">
+            <h4>Mandate Receipt Attachment — Hard Block</h4>
+            <div class="sol-impact">Impact: 5,722 transactions currently unverifiable</div>
+            <p>Change expense system to hard-block submission without receipt for any transaction above ₹500. Implement OCR auto-extraction from uploaded receipts to reduce manual effort. For small expenses (≤₹500), allow self-certification with manager acknowledgement.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> Receipt attachment rate &gt;98%</div>
+              <div class="sm"><span>KPI:</span> Monthly % of no-receipt transactions</div>
+              <div class="sm"><span>Tool:</span> Expensify, SAP Concur, or native OCR integration</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p1-card">
+          <div class="sol-priority p1">P1</div>
+          <div class="sol-body">
+            <h4>Freeze &amp; Recover Personal Expense Reimbursements</h4>
+            <div class="sol-impact">Recovery opportunity: ₹28.9 Billion</div>
+            <p>Immediately freeze the 1,380 rejected personal expense transactions. Cross-reference against payroll and initiate salary recovery or write-off process per HR policy. Strengthen detection by adding merchant category code (MCC) blocking at the card issuer level — not just keyword matching.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> 100% recovery or write-off resolution within 60 days</div>
+              <div class="sm"><span>KPI:</span> Personal expense rate &lt;0.5% of transactions</div>
+              <div class="sm"><span>Control:</span> MCC-level card restrictions for personal categories</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p2-card">
+          <div class="sol-priority p2">P2</div>
+          <div class="sol-body">
+            <h4>Enforce Cost Center at Point of Entry</h4>
+            <div class="sol-impact">Impact: 4,807 transactions unmapped (32.9%)</div>
+            <p>Make cost center a required field with dropdown validation (no free-text) in the expense submission form. Pre-populate based on employee's department mapping in the HR system. Standardise all 23 department name variants into 6 canonical values via a lookup table in the master data.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> Cost center fill rate = 100%</div>
+              <div class="sm"><span>KPI:</span> Zero unclassified transactions per month</div>
+              <div class="sm"><span>Effort:</span> 1-time master data cleanse + form validation update</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p2-card">
+          <div class="sol-priority p2">P2</div>
+          <div class="sol-body">
+            <h4>Mandate Submitter Identity</h4>
+            <div class="sol-impact">Impact: 1,298 anonymous transactions</div>
+            <p>System should auto-populate submitted_by from the authenticated user session — no manual entry and no blank value permitted. For legacy anonymous records, initiate review to identify via card statement cross-referencing.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> 0 anonymous submissions</div>
+              <div class="sm"><span>KPI:</span> % transactions with submitter ID</div>
+              <div class="sm"><span>Control:</span> SSO-linked expense portal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p2-card">
+          <div class="sol-priority p2">P2</div>
+          <div class="sol-body">
+            <h4>Resolve "UNKNOWN" Vendor Problem</h4>
+            <div class="sol-impact">Impact: ₹9.9B in 369 unidentified payee transactions</div>
+            <p>Require vendor selection from a pre-approved vendor registry. Disable free-text vendor entry. For onboarding new vendors, enforce a 5-day KYC process. The 369 existing UNKNOWN transactions require manual investigation and vendor retroactive identification.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> 0 UNKNOWN vendor transactions</div>
+              <div class="sm"><span>KPI:</span> Vendor registry coverage rate</div>
+              <div class="sm"><span>Risk:</span> Potential fraud in UNKNOWN pool — escalate to Internal Audit</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p3-card">
+          <div class="sol-priority p3">P3</div>
+          <div class="sol-body">
+            <h4>Implement FX Hedging Visibility</h4>
+            <div class="sol-impact">Impact: ₹387B in foreign currency exposure</div>
+            <p>Integrate expense system with treasury FX module to flag large foreign-currency transactions for hedging review. Establish monthly FX exposure reporting by currency and department. Set threshold alerts (e.g., USD transactions &gt;$50K) for treasurer review.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> FX report available by 5th of each month</div>
+              <div class="sm"><span>KPI:</span> % of FX exposure hedged vs. unhedged</div>
+              <div class="sm"><span>Savings:</span> 1% FX improvement = ~₹2.2B annual saving</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card p3-card">
+          <div class="sol-priority p3">P3</div>
+          <div class="sol-body">
+            <h4>Anomaly Detection &amp; Continuous Monitoring</h4>
+            <div class="sol-impact">Prevents future leakage across all issue categories</div>
+            <p>Deploy rules-based + ML anomaly detection on the expense data: flag transactions with vendor-description mismatch, duplicate amounts within 7 days, submissions outside business hours, and expense spikes &gt;3σ from peer median. Review weekly with Finance Ops.</p>
+            <div class="sol-metrics">
+              <div class="sm"><span>Target:</span> &lt;1% false negative rate on fraud detection</div>
+              <div class="sm"><span>KPI:</span> Mean time to detect (MTTD) anomalies ≤24 hrs</div>
+              <div class="sm"><span>Tool:</span> Tableau / Power BI + Python rules engine</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Summary table -->
+      <div class="roadmap-section">
+        <h3>Implementation Roadmap Summary</h3>
+        <table class="roadmap-table">
+          <thead>
+            <tr>
+              <th>Initiative</th>
+              <th>Priority</th>
+              <th>Timeline</th>
+              <th>Financial Impact</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Restore Approval Workflow</td>
+              <td><span class="badge p1">P1</span></td>
+              <td>Immediate</td>
+              <td>₹3.91T governance coverage</td>
+              <td>CFO</td>
+            </tr>
+            <tr>
+              <td>Mandate Receipt Attachment</td>
+              <td><span class="badge p1">P1</span></td>
+              <td>Immediate</td>
+              <td>₹152B+ verifiable spend</td>
+              <td>Finance Ops</td>
+            </tr>
+            <tr>
+              <td>Freeze &amp; Recover Personal Expenses</td>
+              <td><span class="badge p1">P1</span></td>
+              <td>0–30 days</td>
+              <td>₹28.9B recovery</td>
+              <td>HR + Finance</td>
+            </tr>
+            <tr>
+              <td>Enforce Cost Center Entry</td>
+              <td><span class="badge p2">P2</span></td>
+              <td>30–60 days</td>
+              <td>Full budget visibility</td>
+              <td>Finance Ops</td>
+            </tr>
+            <tr>
+              <td>Mandate Submitter Identity</td>
+              <td><span class="badge p2">P2</span></td>
+              <td>30–60 days</td>
+              <td>Accountability restoration</td>
+              <td>IT</td>
+            </tr>
+            <tr>
+              <td>Resolve UNKNOWN Vendors</td>
+              <td><span class="badge p2">P2</span></td>
+              <td>30–90 days</td>
+              <td>₹9.9B risk mitigation</td>
+              <td>Procurement</td>
+            </tr>
+            <tr>
+              <td>FX Hedging Visibility</td>
+              <td><span class="badge p3">P3</span></td>
+              <td>90–180 days</td>
+              <td>~₹2.2B+ potential savings</td>
+              <td>Treasury</td>
+            </tr>
+            <tr>
+              <td>Anomaly Detection System</td>
+              <td><span class="badge p3">P3</span></td>
+              <td>90–180 days</td>
+              <td>Ongoing fraud prevention</td>
+              <td>Internal Audit + IT</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>ExpenseIQ · Data: 14,618 transactions · FY2024–2026 · Generated May 2026</span>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
